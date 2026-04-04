@@ -32,11 +32,12 @@ const tierGlowClass = [
 // Accent line width grows per tier
 const tierLineClass = ["w-1/4", "w-1/2", "w-full"];
 const START_PROJECT_TIERS = 2;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <section
   id="pricing"
-  class="section-y relative z-10 bg-[#0A0A0A] text-[#FFFFFF]"
+  class="section-y relative z-10 text-text-primary"
   aria-label="Project pricing"
 >
   <div class="main-container">
@@ -50,14 +51,14 @@ const START_PROJECT_TIERS = 2;
             {pricingHeadlineTop}<br class="hidden md:inline" />
             {pricingHeadlineBottom}.
           </h2>
-          <p class="type-body text-[#9CA3AF]">{pricingSubtitleShort}</p>
+          <p class="type-body text-text-secondary">{pricingSubtitleShort}</p>
         </div>
         <div
-          class="flex w-fit items-center gap-2 self-start rounded-sm border border-[rgba(60,205,127,0.3)] bg-[rgba(60,205,127,0.06)] px-3 py-1.5 md:self-auto"
+          class="flex w-fit items-center gap-2 self-start rounded-md border border-brand-secondary/30 bg-[rgba(60,205,127,0.06)] px-3 py-1.5 md:self-auto"
           role="status"
         >
           <span class="availability-dot h-1.5 w-1.5 rounded-full bg-[#3CCD7F]" aria-hidden="true"></span>
-          <span class="text-xs font-semibold tracking-wide text-[#3CCD7F]">{PRICING_BADGE}</span>
+          <span class="text-xs font-semibold tracking-wide text-brand-secondary">{PRICING_BADGE}</span>
         </div>
       </div>
     </header>
@@ -68,15 +69,15 @@ const START_PROJECT_TIERS = 2;
         PRICING_TIERS.map((tier, i) => (
           <article
             class:list={[
-              "pricing-card group relative flex flex-col overflow-hidden rounded-sm border",
+                  "pricing-card group relative flex flex-col overflow-hidden rounded-md border",
               // Height control: cards 1 & 3 match height; popular card can be taller
               tier.popular ? "md:min-h-[44rem]" : "md:min-h-[40rem]",
               "transition-[transform,box-shadow,border-color,opacity] duration-300 ease-luxury",
-              "hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.4)]",
+              "hover:-translate-y-1 hover:shadow-lg",
               "motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:shadow-none",
               tier.popular
-                ? "is-popular border-[rgba(60,205,127,0.3)] md:-mt-4"
-                : "border-[rgba(255,255,255,0.05)]",
+                ? "is-popular border-brand-secondary/30 md:-mt-4"
+                : "border-border-default",
             ]}
           >
             {/* ── Background glow (progression: gets brighter per tier) ── */}
@@ -88,11 +89,11 @@ const START_PROJECT_TIERS = 2;
               aria-hidden="true"
             />
 
-            {/* ── Accent line at top (grows wider per tier) ── */}
+            {/* ── Accent line at top (full width, opacity increases per tier on hover) ── */}
             <div
               class:list={[
-                "h-0.5 bg-gradient-to-r from-[#3CCD7F] to-[rgba(60,205,127,0.2)] transition-[width] duration-300 ease-luxury group-hover:w-full",
-                tierLineClass[i] ?? "w-1/2",
+                "h-[2px] w-full bg-gradient-to-r from-[#3CCD7F] via-[#3CCD7F]/25 to-transparent transition-opacity duration-300 ease-luxury group-hover:opacity-100",
+                i === 0 ? "opacity-[0.04]" : i === 1 ? "opacity-50" : "opacity-90",
               ]}
               aria-hidden="true"
             />
@@ -111,30 +112,30 @@ const START_PROJECT_TIERS = 2;
 
               {/* ── Tier name + tagline ── */}
               <h3 class="type-h3 mb-1">{tier.name}</h3>
-              <p class="mb-6 text-[0.8125rem] leading-relaxed text-[#6B7280]">{tier.tagline}</p>
+              <p class="mb-6 text-[0.8125rem] leading-relaxed text-text-muted">{tier.tagline}</p>
 
               {/* ── Price block (elevated surface) ── */}
-              <div class="mb-6 rounded-sm bg-[#0A0A0A] border border-[rgba(255,255,255,0.04)] px-5 py-4">
+              <div class="mb-6 rounded-md bg-bg-surface border border-border-default px-5 py-4">
                 <div class="flex items-baseline gap-2">
-                  <span class="text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-[#6B7280]">
+                  <span class="text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-text-muted">
                     From
                   </span>
                   <span class="font-display text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-none tracking-tight">
-                    <span class="text-[#3CCD7F]">$</span>
-                    <span class="text-[#FFFFFF]">{tier.price.replace(/^From\s*\$?/i, "")}</span>
+                    <span class="text-brand-secondary">$</span>
+                    <span class="text-text-primary">{tier.price.replace(/^From\s*\$?/i, "")}</span>
                   </span>
                 </div>
                 <div class="mt-3 flex items-center gap-2">
-                  <svg class="h-3.5 w-3.5 text-[#3CCD7F]/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <svg class="h-3.5 w-3.5 text-[#3CCD7F]/60 motion-safe:animate-[clockTick_2.8s_cubic-bezier(0.16,1,0.3,1)_infinite] motion-reduce:animate-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <circle cx="12" cy="12" r="10" />
                     <path d="M12 6v6l4 2" />
                   </svg>
-                  <span class="text-xs text-[#9CA3AF]">{tier.timeline}</span>
+                  <span class="text-xs text-text-secondary">{tier.timeline}</span>
                 </div>
               </div>
 
               {/* ── Best for ── */}
-              <p class="mb-5 text-[0.8125rem] leading-relaxed text-[#6B7280]">{tier.bestFor}</p>
+              <p class="mb-5 text-[0.8125rem] leading-relaxed text-text-muted">{tier.bestFor}</p>
 
               {/* ── Divider ── */}
               <div class="mb-5 h-px bg-[rgba(255,255,255,0.05)]" aria-hidden="true" />
@@ -187,7 +188,7 @@ const START_PROJECT_TIERS = 2;
               <Button
                 href={
                   i < START_PROJECT_TIERS
-                    ? `/contact?source=pricing-card&tier=${encodeURIComponent(tier.name.toLowerCase())}`
+                    ? `${baseUrl}contact?source=pricing-card&tier=${encodeURIComponent(tier.name.toLowerCase())}`
                     : SITE_CONFIG.socials.calendly
                 }
                 target={i < START_PROJECT_TIERS ? undefined : "_blank"}
@@ -195,10 +196,10 @@ const START_PROJECT_TIERS = 2;
                 label={tier.ctaLabel}
                 variant={tier.ctaPrimary ? "primary" : "light"}
                 class:list={[
-                  "group mt-8 !rounded-sm !px-5 !py-3.5 !text-sm",
+                  "group mt-8 !rounded-md !px-5 !py-3.5 !text-sm",
                   tier.ctaPrimary
                     ? "shadow-[0_0_20px_rgba(60,205,127,0.15)] hover:!bg-[#2FB96D] hover:!border-[#2FB96D]"
-                    : "!border-[rgba(255,255,255,0.08)] !text-[#FFFFFF] hover:!border-[rgba(255,255,255,0.15)] hover:!bg-[rgba(255,255,255,0.03)]",
+                    : "!border-border-strong !text-text-primary hover:!border-border-strong hover:!bg-bg-overlay",
                 ]}
               >
                 <svg
@@ -218,10 +219,10 @@ const START_PROJECT_TIERS = 2;
 
     
     <!-- ── Footer CTA ── -->
-    <div class="glass-surface mt-10 flex flex-col gap-5 rounded-sm p-6 md:mt-12 md:flex-row md:items-center md:justify-between md:p-8">
+    <div class="glass-surface mt-10 flex flex-col gap-5 rounded-md p-6 md:mt-12 md:flex-row md:items-center md:justify-between md:p-8">
       <div class="max-w-[32rem]">
         <h3 class="type-h3 mb-1.5">{PRICING_FOOTER.title}</h3>
-        <p class="type-body text-[#9CA3AF]">{PRICING_FOOTER.description}</p>
+        <p class="type-body text-text-secondary">{PRICING_FOOTER.description}</p>
       </div>
       <Button
         href={SITE_CONFIG.socials.calendly}
@@ -229,7 +230,7 @@ const START_PROJECT_TIERS = 2;
         rel="noopener noreferrer"
         label={PRICING_FOOTER.ctaLabel}
         variant="primary"
-        class="group !w-fit !rounded-sm !px-5 !py-3 !text-sm hover:!bg-[#2FB96D] hover:!border-[#2FB96D]"
+        class="group !w-fit !rounded-md !px-5 !py-3 !text-sm hover:!bg-[#2FB96D] hover:!border-[#2FB96D]"
       >
         <svg
           class="h-4 w-4 transition-transform duration-300 ease-luxury group-hover:translate-x-0.5 motion-reduce:transition-none"
@@ -243,7 +244,7 @@ const START_PROJECT_TIERS = 2;
     </div>
 
     <!-- ── Trust line ── -->
-    <p class="mx-auto mt-10 max-w-[38rem] text-center type-caption text-[#6B7280]">
+    <p class="mx-auto mt-10 max-w-[38rem] text-center type-caption text-text-muted">
       {PRICING_TRUST_LINE}
     </p>
 
@@ -255,12 +256,12 @@ const START_PROJECT_TIERS = 2;
 <style>
   /* GEMINI §5.F — keyframes only */
   .availability-dot {
-    animation: pulse-dot 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    animation: pulse-dot 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   @keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(60, 205, 127, 0); }
+    50% { opacity: 0.85; box-shadow: 0 0 8px 2px rgba(60, 205, 127, 0.35); }
   }
 
   /* ── Reduced motion ── */

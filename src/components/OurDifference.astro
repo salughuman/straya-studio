@@ -1,77 +1,198 @@
 ---
-// OurDifference.astro — Straya Studio
-// Utility-first refactor for GEMINI compliance.
+// OurDifference.astro — v6.0 "Dashboard Simulation"
+// Inspired by Framer/Figma/Webflow UI
+
+const baseCardClass =
+  "group flex flex-col gap-6 rounded-md border-2 border-border-default bg-[#0A0A0A] p-8 transition-all duration-500 hover:border-brand-secondary/40 hover:shadow-accentBold hover:-translate-y-1";
+
+const panelClass =
+  "mx-auto w-full overflow-hidden rounded-t-md border-2 border-border-strong border-b-0 bg-[#050505] shadow-innerAccent";
+
+const cards = [
+  {
+    label: "Systemic",
+    title: "Bento-Grid Architecture",
+    body: "Modular components that lock into place with mathematical precision.",
+    header: "canvas_constructor.exe",
+    kind: "tiles",
+  },
+  {
+    label: "Performance",
+    title: "Zero-Latency Deployment",
+    body: "Instant data propagation across global edge networks.",
+    header: "global_edge_sync",
+    kind: "flow",
+  },
+  {
+    label: "Reliability",
+    title: "Signal Monitoring Layer",
+    body: "Live health telemetry catches bottlenecks before they impact conversion.",
+    header: "runtime_telemetry_v4",
+    kind: "signal",
+  },
+] as const;
+
+const tileItems = [
+  "h-8 w-full rounded-sm bg-[#3CCD7F]/20 border-2 border-brand-secondary/30 animate-[tileSnap_4s_infinite]",
+  "h-8 w-full rounded-sm bg-white/5 border-2 border-border-strong animate-[tileSnap_4s_0.2s_infinite]",
+  "h-8 w-full rounded-sm bg-white/5 border-2 border-border-strong animate-[tileSnap_4s_0.4s_infinite]",
+  "h-8 w-full rounded-sm bg-white/5 border-2 border-border-strong animate-[tileSnap_4s_0.1s_infinite]",
+  "h-8 w-full rounded-sm bg-[#3CCD7F]/10 border-2 border-brand-secondary/20 animate-[tileSnap_4s_0.3s_infinite]",
+  "h-8 w-full rounded-sm bg-white/5 border-2 border-border-strong animate-[tileSnap_4s_0.5s_infinite]",
+];
 ---
 
-<section
-  id="difference"
-  class="section-y relative z-10 bg-[#050505] text-[#FFFFFF]"
-  aria-label="Our difference"
->
-  <div class="main-container flex flex-col gap-8 md:gap-12">
-    <p class="sr-only">
-      Our Difference presents three strategic advantages: scalable support,
-      flexible execution, and nimble delivery for fast-moving brands.
-    </p>
-
-    <!-- Section header -->
+<section id="difference" class="section-y relative z-10 text-[#FFFFFF]">
+  <div class="main-container flex flex-col gap-12">
     <header class="mx-auto flex max-w-[60rem] flex-col gap-4 text-center">
-      <p class="type-label">Our difference</p>
-      <h2 class="type-h2">
-        Straya Studio is the perfect fit for fast moving brands
-      </h2>
+      <p class="type-label text-[#3CCD7F] font-extrabold tracking-[0.2em]">
+        Our difference
+      </p>
+      <h2 class="type-h2">Built systems. Faster outcomes.</h2>
     </header>
 
-    <!-- Difference cards -->
-    <ul class="grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-3 md:gap-6">
-      <li
-        class="group flex flex-col gap-4 rounded-xs border border-[rgba(255,255,255,0.05)] bg-[#0A0A0A] p-6 transition-[transform,border-color,box-shadow] duration-300 ease-luxury hover:-translate-y-1 hover:border-[rgba(255,255,255,0.1)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.35),0_16px_48px_rgba(0,0,0,0.2)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:shadow-none"
-      >
-        <p class="type-label">Scalable</p>
-        <h3 class="type-h3">Boost your in-house creative</h3>
-        <p class="type-body text-[#9CA3AF]">
-          We handle the heavy lifting so you can focus on strategic, high impact
-          work without adding overhead to the team.
-        </p>
-        <div
-          class="mt-auto h-40 w-full rounded-xs border border-[rgba(60,205,127,0.2)] bg-[radial-gradient(ellipse_at_top_right,rgba(60,205,127,0.18),transparent_55%),linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]"
-          aria-hidden="true"
-        />
-      </li>
+    <ul
+      class="grid list-none grid-cols-1 gap-6 p-0 md:grid-cols-2 lg:grid-cols-3"
+    >
+      {
+        cards.map((card) => (
+          <li class={baseCardClass}>
+            <div class="flex flex-col gap-3">
+              <span class="w-fit rounded-full bg-[#3CCD7F]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#3CCD7F] border border-[#3CCD7F]/20">
+                {card.label}
+              </span>
+              <h3 class="type-h3 tracking-tight group-hover:text-[#3CCD7F] transition-colors">
+                {card.title}
+              </h3>
+              <p class="type-body text-[#9CA3AF] leading-relaxed">
+                {card.body}
+              </p>
+            </div>
 
-      <li
-        class="group flex flex-col gap-4 rounded-xs border border-[rgba(255,255,255,0.05)] bg-[#0A0A0A] p-6 transition-[transform,border-color,box-shadow] duration-300 ease-luxury hover:-translate-y-1 hover:border-[rgba(255,255,255,0.1)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.35),0_16px_48px_rgba(0,0,0,0.2)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:shadow-none"
-      >
-        <p class="type-label">Flexible</p>
-        <h3 class="type-h3">
-          Say yes to more and bigger projects
-        </h3>
-        <p class="type-body text-[#9CA3AF]">
-          Whether you need more bandwidth or different skills, Straya has
-          whatever you need to get the job done.
-        </p>
-        <div
-          class="mt-auto h-40 w-full rounded-xs border border-[rgba(60,205,127,0.2)] bg-[radial-gradient(ellipse_at_top_right,rgba(60,205,127,0.18),transparent_55%),linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]"
-          aria-hidden="true"
-        />
-      </li>
+            <div class="mt-auto pt-4">
+              <div class={panelClass}>
+                <div class="flex items-center justify-between border-b-2 border-border-strong px-4 py-3 bg-[#0F1115]">
+                  <div class="flex gap-2">
+                    <span class="h-2 w-2 rounded-full bg-[#3CCD7F]/40" />
+                    <span class="h-2 w-2 rounded-full bg-white/10" />
+                  </div>
+                  <span class="font-mono text-[10px] font-bold tracking-widest text-white/40 uppercase">
+                    {card.header}
+                  </span>
+                </div>
 
-      <li
-        class="group flex flex-col gap-4 rounded-xs border border-[rgba(255,255,255,0.05)] bg-[#0A0A0A] p-6 transition-[transform,border-color,box-shadow] duration-300 ease-luxury hover:-translate-y-1 hover:border-[rgba(255,255,255,0.1)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.35),0_16px_48px_rgba(0,0,0,0.2)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:shadow-none"
-      >
-        <p class="type-label">Nimble</p>
-        <h3 class="type-h3">
-          Don't sacrifice quality for speed
-        </h3>
-        <p class="type-body text-[#9CA3AF]">
-          Our global team delivers agency-level work in a fraction of the time.
-        </p>
-        <div
-          class="mt-auto h-40 w-full rounded-xs border border-[rgba(60,205,127,0.2)] bg-[radial-gradient(ellipse_at_top_right,rgba(60,205,127,0.18),transparent_55%),linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]"
-          aria-hidden="true"
-        />
-      </li>
+                <div class="relative flex h-40 items-center justify-center bg-[#050505] overflow-hidden">
+                  {card.kind === "tiles" ? (
+                    <div class="grid w-40 grid-cols-3 gap-3 perspective-1000 rotate-x-12 rotate-z-[-12deg]">
+                      {tileItems.map((tileClass) => (
+                        <div class={tileClass} />
+                      ))}
+                    </div>
+                  ) : card.kind === "flow" ? (
+                    <div class="flex w-full flex-col gap-6 px-10">
+                      {[0, 1, 2].map((i) => (
+                        <div class="relative h-1 w-full rounded-full bg-white/5 border border-white/5">
+                          <div
+                            class="absolute h-full w-24 bg-gradient-to-r from-transparent via-[#3CCD7F] to-transparent animate-[flowRun_3s_infinite_linear]"
+                            style={`animation-delay: ${i * 0.8}s`}
+                          />
+                          <div class="absolute -left-1 -top-1 h-3 w-3 rounded-full bg-[#050505] border border-white/10" />
+                          <div class="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-[#3CCD7F] shadow-[0_0_10px_#3CCD7F]" />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div class="flex h-full w-full items-end justify-between gap-1 px-6 pb-4 pt-10">
+                      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(60,205,127,0.1),transparent_70%)]" />
+                      {[...Array(12)].map((_, i) => (
+                        <div
+                          class="w-full rounded-t-sm bg-[#3CCD7F]/20 border-x border-t border-[#3CCD7F]/30 animate-[pulse_3s_infinite_ease-in-out]"
+                          style={`height: ${20 + Math.random() * 60}%; animation-delay: ${i * 0.1}s`}
+                        />
+                      ))}
+                      <div class="absolute inset-x-0 top-0 h-[2px] bg-[#3CCD7F] shadow-[0_0_15px_#3CCD7F] animate-[scan_4s_infinite_linear]" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </section>
 
+<style>
+  /* Framer-style "Snapping" Physics */
+  @keyframes tileSnap {
+    0%,
+    15% {
+      transform: translateZ(40px) scale(1.1);
+      opacity: 0;
+      filter: blur(4px);
+    }
+    30%,
+    70% {
+      transform: translateZ(0) scale(1);
+      opacity: 1;
+      filter: blur(0px);
+    }
+    85%,
+    100% {
+      transform: translateZ(-20px) scale(0.9);
+      opacity: 0;
+    }
+  }
+
+  /* Webflow-style Flow Physics */
+  @keyframes flowRun {
+    0% {
+      left: -20%;
+      opacity: 0;
+    }
+    20%,
+    80% {
+      opacity: 1;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  /* Dashboard Scanning Physics */
+  @keyframes scan {
+    0% {
+      top: 0%;
+      opacity: 0;
+    }
+    10%,
+    90% {
+      opacity: 1;
+    }
+    100% {
+      top: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scaleY(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scaleY(1.2);
+      opacity: 1;
+    }
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .rotate-x-12 {
+    transform: rotateX(25deg);
+  }
+</style>
